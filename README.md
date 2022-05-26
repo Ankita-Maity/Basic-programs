@@ -1,2 +1,2 @@
 # Basic-programs
-Some of the basic programs written when I was learning to code various stuff during B.Tech
+This repository contains some basic programs from my B.Tech (2015 - 2019).
