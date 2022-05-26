@@ -1,0 +1,205 @@
+Select e.FNAME, e.MINIT, e.LNAME, s.FNAME, s.MINIT, s.LNAME from Employee2 e, Employee2  s where e.SUPERSSN=s.SSN
+Select *from Employee2 where DNO=5
+Select *from Employee2, Department2 where DNUMBER=DNO and DNAME='Research'
+Select PNAME from Project2, Department2, Employee2 where DNUM=DNUMBER and MGRSSN=SSN and LNAME='Smith' UNION Select PNAME from Project2, Works_on2, Employee2 where PNUMBER=PNO and ESSN=SSN and LNAME='Smith'
+Select FNAME, MINIT, LNAME from Employee2 where DNO IN (Select DNUMBER from Department2 where DNAME='Research')
+Select FNAME, MINIT, LNAME, 1.1*SALARY from Employee2, Works_on2, Project2 where SSN=ESSN and PNO=PNUMBER and PNAME='ProductX'
+Select FNAME, MINIT, LNAME, PNAME  from Employee2, Works_on2, Project2, Department2 where DNO=DNUMBER and PNO=PNUMBER and SSN=ESSN order by DNO,LNAME
+Update Project2 set PLOCATION='Bellaire', DNUM=5 where PNUMBER=10
+Select *from Project2
+Select FNAME, MINIT, LNAME, 1.1*SALARY from Employee2, Department2 where DNO=DNUMBER and DNAME='Research'
+
+CREATE TABLE Employee2
+(FNAME VARCHAR (20),
+MINIT VARCHAR (1),
+LNAME VARCHAR (20),
+SSN NUMBER (10),
+BADTE DATE,
+ADDRESS VARCHAR (40),
+SEX VARCHAR (1),
+SALARY NUMBER (5),
+SUPERSSN NUMBER(10),
+DNO NUMBER (1)
+)
+
+Insert into Employee2 values ('John','B','Smith', '123456789',TO_DATE('09-JAN-1956','DD-MM-YYYY'),'Address1','M','30000','333445566','5')
+Insert into Employee2 values ('Franklin','T','Wong', '333445566',TO_DATE('06-DEC-1955','DD-MM-YYYY'),'Address2','M','40000','123456789','5')
+Insert into Employee2 values ('Alicia','J','Zeaya', '999937777',TO_DATE('19-JUL-1986','DD-MM-YYYY'),'Address3','F','25000','987654321','4')
+Insert into Employee2 values ('Jennifer','S','Wakitaco', '987654321',TO_DATE('20-JUN-1941','DD-MM-YYYY'),'Address4','F','43000','123456789','4')
+Insert into Employee2 values ('Ramesh','K','Narayan', '666884444',TO_DATE('15-SEP-1952','DD-MM-YYYY'),'Address5','M','38000','333445566','5')
+Insert into Employee2 values ('Joyce','A','English', '453453453',TO_DATE('31-JUL-1972','DD-MM-YYYY'),'Address6','F','25000','333445566','5')
+Insert into Employee2 values ('Ahmed','V','Jabbar', '987997987',TO_DATE('29-MAR-1990','DD-MM-YYYY'),'Address7','M','25000','987654321','4')
+Insert into Employee2 values ('Janice','E','Derp', '888666588',TO_DATE('10-NOV-1957','DD-MM-YYYY'),'Address8','F','50000',NULL,'1')
+
+CREATE TABLE Department2
+(DNAME VARCHAR (20),
+DNUMBER NUMBER (1),
+MGRSSN NUMBER (10),
+MGRSTARTDATE DATE
+)
+
+Insert into Department2 values ('Research','5','333445555',TO_DATE('22-MAY-1988','DD-MM-YYYY'))
+Insert into Department2 values ('Administration','4', '123456789',TO_DATE('01-JAN-1995','DD-MM-YYYY'))
+Insert into Department2 values ('Headquarters','1','987654321',TO_DATE('06-OCT-1981','DD-MM-YYYY'))
+
+CREATE TABLE Project2
+(PNAME VARCHAR (20),
+PNUMBER NUMBER (2),
+PLOCATION VARCHAR (20),
+DNUM NUMBER (1)
+)
+
+Insert into Project2 values ('ProductX','1','Place1', '5')
+Insert into Project2 values ('ProductY','2','Place2', '5')
+Insert into Project2 values ('ProductZ','3','Place3', '5')
+Insert into Project2 values ('Computerization','10','Place4', '4')
+Insert into Project2 values ('Reorganization','20','Place3', '1')
+Insert into Project2 values ('Newton','30','Place4', '4')
+
+CREATE TABLE Works_on2
+(ESSN NUMBER (9),
+PNO NUMBER (2),
+HOURS VARCHAR (4)
+)
+
+Insert into Works_on2 values ('123456789','1','32.5')
+Insert into Works_on2 values ('123456789','2','7.5')
+Insert into Works_on2 values ('666884444','3','40.5')
+Insert into Works_on2 values ('453453453','1','20.0')
+Insert into Works_on2 values ('453453453','2','20.0')
+Insert into Works_on2 values ('333445555','2','10.0')
+Insert into Works_on2 values ('333445555','3','10.0')
+Insert into Works_on2 values ('333445555','10','10.0')
+Insert into Works_on2 values ('333445555','20','10.0')
+Insert into Works_on2 values ('999887777','30','30.0')
+Insert into Works_on2 values ('999887777','10','10.0')
+Insert into Works_on2 values ('999887777','10','35.0')
+Insert into Works_on2 values ('999887777','30','5.0')
+Insert into Works_on2 values ('987654321','30','20.0')
+Insert into Works_on2 values ('987654321','20','15.0')
+Insert into Works_on2 values ('888665555','20','')
+
+CREATE TABLE Dept_Locations2(
+DNUMBER NUMBER(3),
+DLOCATION VARCHAR(25),
+Primary key (DNUMBER,DLOCATION)
+);
+
+Insert into Dept_Locations2 values (1,'Place3')
+Insert into Dept_Locations2 values (4,'Place4')
+Insert into Dept_Locations2 values (5,'Place1')
+Insert into Dept_Locations2 values (5,'Place2')
+Insert into Dept_Locations2 values (5,'Place3')
+
+CREATE TABLE Dependent2(
+ESSN NUMBER(15),
+DEPARTMENT_NAME VARCHAR(15),
+SEX VARCHAR(3),
+BDATE DATE,
+RELATIONSHIP VARCHAR(25),
+Primary key(ESSN,DEPARTMENT_NAME) 
+);
+
+Insert into Dependent2 values(333445555,'Alice','F',TO_DATE('05-04-1986','DD-MM-YYYY'),'Daughter');
+Insert into Dependent2 values(333445555,'Theodore','M',TO_DATE('25-10-1983','DD-MM-YYYY'),'Son');
+Insert into Dependent2 values(333445555,'Joy','F',TO_DATE('03-05-1958','DD-MM-YYYY'),'Spouse');
+Insert into Dependent2 values(987654321,'Abnet','M',TO_DATE('28-02-1942','DD-MM-YYYY'),'Spouse');
+Insert into Dependent2 values(123456789,'Michael','M',TO_DATE('04-01-1988','DD-MM-YYYY'),'Son');
+Insert into Dependent2 values(123456789,'Alice','F',TO_DATE('30-12-1988','DD-MM-YYYY'),'Daughter');
+Insert into Dependent2 values(123456789,'Elizabeth','F',TO_DATE('05-05-1967','DD-MM-YYYY'),'Spouse');
+
+CREATE TABLE EMP2
+(EMPNO NUMBER (6),
+ENAME VARCHAR (20) NOT NULL,
+DOB DATE,
+JOB VARCHAR (10) NOT NULL,
+DEPTNO NUMBER (2),
+SAL NUMBER (7,2),
+primary key(EMPNO)
+)
+
+ALTER TABLE EMP2 add EXPERIENCE NUMBER
+
+ALTER TABLE EMP2 MODIFY JOB VARCHAR (15)
+
+CREATE TABLE DEPT2
+(DEPTNO NUMBER (2),
+DNAME VARCHAR (15) NOT NULL,
+LOCN VARCHAR (10),
+primary key(DEPTNO)
+)
+
+ALTER TABLE EMP2 ADD CONSTRAINT SAL CHECK (SAL>6000)
+
+ALTER TABLE EMP2 DROP COLUMN EXPERIENCE
+
+Insert into DEPT2 values(1,'Department1', 'Location1')
+Insert into DEPT2 values(2,'Department2', 'Location2')
+Insert into DEPT2 values(3,'Department3', 'Location3')
+
+Insert ALL 
+into EMP2  (EMPNO, ENAME, DOB, JOB, DEPTNO, SAL) values (1,'Employee1', TO_DATE('22-01-1987','DD-MM-YYYY'), 'Job1',1,20000)
+into EMP2  (EMPNO, ENAME, DOB, JOB, DEPTNO, SAL) values (2,'Employee2', TO_DATE('22-01-1987','DD-MM-YYYY'), 'Job2',2,20000)
+into EMP2  (EMPNO, ENAME, DOB, JOB, DEPTNO, SAL) values (3,'Employee3', TO_DATE('22-01-1987','DD-MM-YYYY'), 'Job3',3,20000)
+into EMP2  (EMPNO, ENAME, DOB, JOB, DEPTNO, SAL) values (4,'Employee4', TO_DATE('22-01-1987','DD-MM-YYYY'), 'Job4',1,20000)
+into EMP2  (EMPNO, ENAME, DOB, JOB, DEPTNO, SAL) values (5,'Employee5', TO_DATE('22-01-1987','DD-MM-YYYY'), 'Job5',2,20000)
+SELECT *from DUAL
+
+UPDATE EMP2 set SAL=30000 where JOB='Job1'
+
+CREATE view EMPLOYEE3 as select *from EMP2
+
+DELETE from EMP2 where JOB='Job1'
+
+DELETE from EMP2 where ROWNUM<=2
+
+CREATE TABLE Salesman2
+(Salesman_id INTEGER primary key,
+Name VARCHAR (20),
+City VARCHAR (20),
+Commission DECIMAL (3,2)
+)
+
+CREATE TABLE Customer2
+(Customer_id NUMBER (2) primary key,
+Cust_Name VARCHAR (20),
+City VARCHAR (20),
+Grade INTEGER,
+Salesman_id INTEGER references Salesman2(Salesman_id)
+)
+
+CREATE TABLE Orders2
+(Ord_No INTEGER primary key,
+Purchase_Amt NUMBER,
+Ord_Date DATE,
+Customer_id INTEGER,
+Salesman_id INTEGER references Salesman2(Salesman_id)
+)
+
+Insert into Salesman2 values (1000, 'John', 'Bangalore', 0.25)
+Insert into Salesman2 values (2000, 'Ravi', 'Bangalore', 0.20)
+Insert into Salesman2 values (3000, 'Kumar', 'Mysore', 0.15)
+Insert into Salesman2 values (4000, 'Smith', 'Delhi', 0.30)
+Insert into Salesman2 values (5000, 'Harsha', 'Hyderabad', 0.15)
+
+Insert into Customer2 values (10, 'Preethi', 'Bangalore', 100,1000)
+Insert into Customer2 values (11, 'Vivek', 'Mangalore', 300,1000)
+Insert into Customer2 values (12, 'Bhaskar', 'Chennai', 400,2000)
+Insert into Customer2 values (13, 'Cilian', 'Bangalore', 200,2000)
+Insert into Customer2 values (14, 'Diantha', 'Bangalore', 400,3000)
+
+Insert into Orders2 values (50, 5000, TO_DATE('04-MAY-2017','DD-MM-YYYY'), 10,1000)
+Insert into Orders2 values (51, 450, TO_DATE('20-JAN-2017','DD-MM-YYYY'), 10,2000)
+Insert into Orders2 values (52, 1000, TO_DATE('24-FEB-2017','DD-MM-YYYY'), 13,2000)
+Insert into Orders2 values (53, 3500, TO_DATE('13-APR-2017','DD-MM-YYYY'), 14,3000)
+Insert into Orders2 values (54, 550, TO_DATE('09-MAR-2017','DD-MM-YYYY'), 12,2000)
+
+Select *from Orders2
+
+Select Grade, Count(distinct Customer_id) from Customer2 group by Grade having Grade > (Select AVG (Grade)from Customer2 where City ='Bangalore')
+
+Select Salesman_id, Name from Salesman2 S where 1<(Select count(*) from Customer2 where Salesman_id =S.Salesman_id)
+
+Select Salesman2.Salesman_id , Name, Cust_name, Commission from Salesman2, Customer2 where Salesman2.city=Customer2.city UNION Select Salesman_id, Name, 'NO MATCH', Commission from Salesman2 where NOT City =ANY(Select City from Customer2) order by 2 DESC
+
+Create view EliteSalesman as select B.Ord_Date, A.Salesman_id, A.Name from Salesman2 A, Orders2 B WHERE A.Salesman_id=B.Salesman_id AND B.Purchase_Amt=(Select max (Purchase_Amt) from Orders2 C WHERE C.Ord_Date=B.Ord_Date)
